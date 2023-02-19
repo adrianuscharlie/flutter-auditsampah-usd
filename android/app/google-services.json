@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "672194706513",
+    "project_id": "fchsampah",
+    "storage_bucket": "fchsampah.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672194706513:android:d0d7c5f13a2c9b959d8c70",
+        "android_client_info": {
+          "package_name": "com.example.ppkmb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672194706513-qhhrn7cjru98tnf7i2kpjroak6r986m6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjxSpcBxnt4i37oEfoiHp3DgIAxQ4Jen4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672194706513-qhhrn7cjru98tnf7i2kpjroak6r986m6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
