@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ppkmb/screen/Home.dart';
+import 'package:ppkmb/services/Database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -14,8 +15,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isLoggedIn = false;
-  String? name = '';
-  String? nim = '';
+  String nim = '';
+  String warning = "Masukan Nim Anda Dengan Sesuai";
+  final _formKey = new GlobalKey<FormState>();
   final nimController = TextEditingController();
   final namaController = TextEditingController();
 
@@ -27,33 +29,49 @@ class _LoginState extends State<Login> {
   void autoLogIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? nim = prefs.getString('nim');
-    final String? nama = prefs.getString('nama');
 
-    if (nim != null) {
+    if (nim != "") {
       setState(() {
         isLoggedIn = true;
-        this.nim = nim;
-        this.name = nama;
+        this.nim = nim ?? '';
       });
       return;
     }
   }
 
   Future<Null> loginMahasiswa() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('nim', nimController.text);
-    prefs.setString('nama', namaController.text);
-    setState(() {
-      nim = nimController.text;
-      isLoggedIn = true;
-    });
+    try {
+      bool login = await DatabaseServices().loginUser(nimController.text);
+      if (!login) {
+        DatabaseServices().createNewUser(nimController.text);
+        print("Masuk Baru");
+      }
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('nim', nimController.text);
+      setState(() {
+        this.nim = nimController.text;
+        isLoggedIn = true;
+        nimController.clear();
+      });
+    } catch (e) {
+      setState(() {
+        warning = "Tidak ada koneksi internet/gagal login";
+      });
+    }
+  }
 
-    nimController.clear();
+  Future<Null> logoutMahasiswa() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('nim', "");
+    setState(() {
+      nim = "";
+      isLoggedIn = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLoggedIn
+    return !isLoggedIn
         ? Scaffold(
             backgroundColor: Colors.grey[50],
             body: Container(
@@ -74,46 +92,57 @@ class _LoginState extends State<Login> {
                     height: 45.0,
                   ),
                   Form(
+                      key: _formKey,
                       child: Column(
-                    children: [
-                      TextFormField(
-                        controller: nimController,
-                        decoration: InputDecoration(
-                            hintText: "Masukan NIM Anda",
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: Colors.orangeAccent,
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            print(nimController.text);
-                            autoLogIn();
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.orangeAccent),
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.fromLTRB(20, 10, 20, 10)),
+                        children: [
+                          TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty || value.length != 9) {
+                                return warning;
+                              }
+                            },
+                            controller: nimController,
+                            decoration: InputDecoration(
+                                hintText: "Masukan NIM Anda",
+                                prefixIcon: Icon(
+                                  Icons.person,
+                                  color: Colors.orangeAccent,
+                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.0))),
                           ),
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 25.0,
-                                color: Colors.white,
-                                fontFamily: 'Montserrat'),
-                          ))
-                    ],
-                  ))
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  loginMahasiswa();
+                                }
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.orangeAccent),
+                                padding: MaterialStateProperty.all<EdgeInsets>(
+                                    EdgeInsets.fromLTRB(20, 10, 20, 10)),
+                              ),
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 25.0,
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat'),
+                              ))
+                        ],
+                      ))
                 ],
               ),
             ),
           )
-        : Home();
+        : Home(
+            logoutMahasiswa: logoutMahasiswa,
+            nim: this.nim,
+          );
   }
 }

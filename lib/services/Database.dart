@@ -8,10 +8,50 @@ class DatabaseServices {
 
   DatabaseServices();
 
-  Future createUser({required String name}) async {
-    final user = FirebaseFirestore.instance.collection('sampah').doc('bubu');
+  Future<bool> sendRecord(Map sampah, Mahasiswa mahasiswa) async {
+    final user =
+        FirebaseFirestore.instance.collection('sampah').doc(mahasiswa.nim);
+    sampah.forEach((key, item) {
+      mahasiswa.sampah.update(key, (value) => value += item);
+    });
+    Timestamp waktu = Timestamp.fromDate(DateTime.now());
+    Map report = {"date": waktu, "sampah": sampah};
+    List send = [report];
+    try {
+      user.update(
+          {'sampah': mahasiswa.sampah, "report": FieldValue.arrayUnion(send)});
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 
-    final json = {'nama': 'Charlie', 'usia': '10'};
-    await user.set(json);
+  Future<bool> loginUser(String nim) async {
+    DocumentSnapshot document = await sampah.doc(nim).get();
+    if (document.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future createNewUser(String nim) async {
+    Map<String, dynamic> sampah = {
+      "makanan": 0,
+      "organik": 0,
+      "plastik": 0,
+      "kertas": 0,
+      "bungkus": 0,
+      "elektronik": 0,
+      "baju": 0,
+      "kendaraan": 0,
+      "disposable": 0,
+      "konsumsi": 0,
+      "botol": 0
+    };
+    List report = [];
+    Mahasiswa mahasiswa = new Mahasiswa.Complete(nim, sampah, report);
+    return await this.sampah.doc(nim).set(mahasiswa.toJson());
   }
 }
