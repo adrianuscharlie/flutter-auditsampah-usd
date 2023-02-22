@@ -4,6 +4,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:ppkmb/services/Database.dart';
 import '../components/FormInput.dart';
 import '../models/Mahasiswa.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/entypo_icons.dart';
+import 'package:fluttericon/iconic_icons.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({Key? key}) : super(key: key);
@@ -14,6 +18,19 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   bool success = true;
+  List myIcons = const <Widget>[
+    const Icon(FontAwesome.food),
+    const Icon(FontAwesome5.leaf),
+    const Icon(FontAwesome5.shopping_bag),
+    const Icon(FontAwesome.newspaper),
+    const Icon(Entypo.bag),
+    const Icon(Iconic.mobile),
+    const Icon(FontAwesome5.tshirt),
+    const Icon(FontAwesome.cab),
+    const Icon(FontAwesome.recycle),
+    const Icon(FontAwesome5.soap),
+    const Icon(FontAwesome5.wine_bottle)
+  ];
   List<String> test = [
     "Sampah makanan (makanan yang tersisa di piring, makanan yang tidak disukai, dsb)",
     "Sampah organik lain (sisa tebang pohon, bersih – bersih kebun, dsb)",
@@ -76,11 +93,13 @@ class _FormScreenState extends State<FormScreen> {
             child: Column(
               children: [
                 ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: test.length,
                     itemBuilder: ((context, index) {
                       return Card(
                         child: ListTile(
+                          leading: myIcons[index],
                           title: Text(test[index]),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,

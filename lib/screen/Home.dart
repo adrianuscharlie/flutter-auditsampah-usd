@@ -8,6 +8,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import './Login.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/entypo_icons.dart';
+import 'package:fluttericon/iconic_icons.dart';
 
 class Home extends StatefulWidget {
   final VoidCallback logoutMahasiswa;
@@ -19,7 +23,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  @override
+  List myIcons = const <Widget>[
+    const Icon(FontAwesome.cab),
+    const Icon(FontAwesome5.tshirt),
+    const Icon(FontAwesome.newspaper),
+    const Icon(Entypo.bag),
+    const Icon(FontAwesome5.soap),
+    const Icon(FontAwesome5.leaf),
+    const Icon(Iconic.mobile),
+    const Icon(FontAwesome5.shopping_bag),
+    const Icon(FontAwesome5.wine_bottle),
+    const Icon(FontAwesome.recycle),
+    const Icon(FontAwesome.food),
+  ];
+
   Widget build(BuildContext context) {
     try {
       return StreamBuilder(
@@ -32,8 +49,8 @@ class _HomeState extends State<Home> {
             try {
               return Scaffold(
                   body: Container(
-                color: Colors.blueAccent[100],
-                child: SpinKitWave(
+                color: Color(0xFF66BB6A),
+                child: SpinKitCircle(
                   color: Colors.white,
                   size: 50.0,
                 ),
@@ -81,36 +98,31 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            "Selamat Datang,",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Text(
-                              person.nim,
-                              style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                        ],
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        "Selamat Datang,",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          person.nim,
+                          style: TextStyle(
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.0,
                       ),
                       ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: kategori.length,
                         itemBuilder: (context, index) {
@@ -118,7 +130,7 @@ class _HomeState extends State<Home> {
                             visualDensity:
                                 VisualDensity(horizontal: 0, vertical: 1),
                             tileColor: Colors.white,
-                            leading: Icon(Icons.shopping_bag_rounded),
+                            leading: myIcons[index],
                             title: Text(
                               kategori[index],
                               style: TextStyle(fontSize: 15.0),

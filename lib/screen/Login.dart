@@ -73,7 +73,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return !isLoggedIn
         ? Scaffold(
-            backgroundColor: Colors.grey[50],
+            backgroundColor: Colors.grey[200],
             body: Container(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -83,9 +83,11 @@ class _LoginState extends State<Login> {
                   FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      "Login PPKMB",
+                      "Login FCH",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 40.0),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40.0),
                     ),
                   ),
                   SizedBox(
@@ -103,10 +105,13 @@ class _LoginState extends State<Login> {
                             },
                             controller: nimController,
                             decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hoverColor: Colors.white,
+                                focusColor: Colors.white,
                                 hintText: "Masukan NIM Anda",
                                 prefixIcon: Icon(
                                   Icons.person,
-                                  color: Colors.orangeAccent,
+                                  color: Colors.green[400],
                                 ),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0))),
@@ -123,7 +128,7 @@ class _LoginState extends State<Login> {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Colors.orangeAccent),
+                                        Colors.green),
                                 padding: MaterialStateProperty.all<EdgeInsets>(
                                     EdgeInsets.fromLTRB(20, 10, 20, 10)),
                               ),
