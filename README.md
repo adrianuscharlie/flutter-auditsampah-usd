@@ -1,5 +1,5 @@
 # Audit Sampah Application (Garbage Recap)
-Developing apps for student in Sanata Dharma University that can do some garbage recap. The purpose of building this app are to make easier the student and the lecturer in Sanata Dharma University to input, manage and monitor their personal garbage. The garbage recap are mandatory task for personality development subject for new student in Sanata Dharma University. 
+Developing apps for student in Sanata Dharma University that can do some garbage recap. The purpose of building this app are to make easier the student and the lecturer in Sanata Dharma University to input, manage and monitor their personal garbage. The garbage recap are mandatory task for personality development subject for new student in Sanata Dharma University. This project are fully funded by Sanata Dharma University (Freelance Contract).
 
 ## Table Content
 - About The Project
