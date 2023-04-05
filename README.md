@@ -1,16 +1,17 @@
-# ppkmb
+# Audit Sampah Application (Garbage Recap)
+Developing apps for student in Sanata Dharma University that can do some garbage recap. The purpose of building this app are to make easier the student and the lecturer in Sanata Dharma University to input, manage and monitor their personal garbage. The garbage recap are mandatory task for personality development subject for new student in Sanata Dharma University. 
 
-A new Flutter project.
+## Table Content
+- About The Project
+- Screenshot
+- Technologies
 
-## Getting Started
+## About The Project
+The user of this app are student from Sanata Dharma University. Login using Student ID are required to access this app. After login, student have their dashboard including list of garbage amount and form that used to input their daily garbage recaps.
 
-This project is a starting point for a Flutter application.
+## Screenshot
+You can access the APK and the manual of using this app through [THIS](https://drive.google.com/drive/u/1/folders/1BK4DhJd8yGPqTG0EOOEocAJW9Fkig6-G) link.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Technologies
+- Flutter
+- Firebase Firestore
